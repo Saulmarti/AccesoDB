@@ -13,9 +13,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyDBAdapter {
 
     // Definiciones y constantes
-    private static final String DATABASE_NAME = "dbdiscos.db";
-    private static final String DATABASE_TABLE = "estudiantes";
-    private static final String DATABASE_TABLE2 = "profesores";
+    private static final String DATABASE_NAME = "dbusuarios.db";
+    private static final String DATABASE_TABLE_Est = "estudiantes";
+    private static final String DATABASE_TABLE_Prof = "profesores";
     private static final int DATABASE_VERSION = 1;
 
     private static final String nombre = "nombre";
@@ -24,6 +24,12 @@ public class MyDBAdapter {
     private static final String curso = "curso";
     private static final String nota = "nota";
 
+    private static final String nombreP = "nombreP";
+    private static final String edadP = "edadP";
+    private static final String cicloP = "cicloP";
+    private static final String cursoP = "cursoP";
+    private static final String despachoP = "despachoP";
+
     // Contexto de la aplicación que usa la base de datos
     private final Context context;
     // Clase SQLiteOpenHelper para crear/actualizar la base de datos
@@ -31,8 +37,10 @@ public class MyDBAdapter {
     // Instancia de la base de datos
     private SQLiteDatabase db;
 
-    private static final String DATABASE_CREATE = "CREATE TABLE "+DATABASE_TABLE+" (_id integer primary key autoincrement, title text, year integer);";
-    private static final String DATABASE_DROP = "DROP TABLE IF EXISTS "+DATABASE_TABLE+";";
+    private static final String DATABASE_CREATE_Est = "CREATE TABLE "+DATABASE_TABLE_Est+" (_id integer primary key autoincrement, nombre text, edad text, ciclo text, curso text, nota text );";
+    private static final String DATABASE_CREATE_Prof = "CREATE TABLE "+DATABASE_TABLE_Prof+" (_id integer primary key autoincrement, nombreP text, edadP text, cicloP text, cursoP text, despachoP text );";
+    private static final String DATABASE_DROP_Est = "DROP TABLE IF EXISTS "+DATABASE_TABLE_Est+";";
+    private static final String DATABASE_DROP_Prof = "DROP TABLE IF EXISTS "+DATABASE_TABLE_Prof+";";
 
 
     public MyDBAdapter (Context c){
@@ -51,31 +59,33 @@ public class MyDBAdapter {
 
     }
 
+    public void insertarProfesor(String n2,String e2,String c2,String cu2,String nt2){
+        //Creamos un nuevo registro de valores a insertar
+        ContentValues newValuesProf = new ContentValues();
+        //Asignamos los valores de cada campo
+        newValuesProf.put(nombreP,n2);
+        newValuesProf.put(edadP,e2);
+        newValuesProf.put(cicloP,c2);
+        newValuesProf.put(cursoP,cu2);
+        newValuesProf.put(despachoP,nt2);
+
+        db.insert(DATABASE_TABLE_Prof,null,newValuesProf);
+    }
+
     public void insertarEstudiante(String n,String e,String c,String cu,String nt){
         //Creamos un nuevo registro de valores a insertar
-        ContentValues newValues = new ContentValues();
+        ContentValues newValuesEst = new ContentValues();
         //Asignamos los valores de cada campo
-        newValues.put(nombre,n);
-        newValues.put(edad,e);
-        newValues.put(ciclo,c);
-        newValues.put(curso,cu);
-        newValues.put(nota,nt);
+        newValuesEst.put(nombre,n);
+        newValuesEst.put(edad,e);
+        newValuesEst.put(ciclo,c);
+        newValuesEst.put(curso,cu);
+        newValuesEst.put(nota,nt);
 
-        db.insert(DATABASE_TABLE,null,newValues);
+        db.insert(DATABASE_TABLE_Est,null,newValuesEst);
     }
 
-    public void insertarProfesor(String n,String e,String c,String cu,String nt){
-        //Creamos un nuevo registro de valores a insertar
-        ContentValues newValues = new ContentValues();
-        //Asignamos los valores de cada campo
-        newValues.put(nombre,n);
-        newValues.put(edad,e);
-        newValues.put(ciclo,c);
-        newValues.put(curso,cu);
-        newValues.put(nota,nt);
 
-        db.insert(DATABASE_TABLE2,null,newValues);
-    }
 
     private static class MyDbHelper extends SQLiteOpenHelper {
 
@@ -86,13 +96,17 @@ public class MyDBAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(DATABASE_CREATE);
+            db.execSQL(DATABASE_CREATE_Prof);
+            db.execSQL(DATABASE_CREATE_Est);
+
 
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            db.execSQL(DATABASE_DROP);
+            db.execSQL(DATABASE_DROP_Prof);
+            db.execSQL(DATABASE_DROP_Est);
+
             onCreate(db);
 
         }

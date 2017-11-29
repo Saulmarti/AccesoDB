@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 public class Profesores extends AppCompatActivity implements View.OnClickListener{
 
-    Button a,g;
-    EditText nombre,edad,ciclo,curso,nota;
+    private Button a,g;
+    private EditText nombreP,edadP,cicloP,cursoP,despachoP;
     private MyDBAdapter dbAdapter;
 
     @Override
@@ -22,13 +22,13 @@ public class Profesores extends AppCompatActivity implements View.OnClickListene
         dbAdapter = new MyDBAdapter(this);
         dbAdapter.open();
 
-        a = (Button) findViewById(R.id.atras);
-        g = (Button) findViewById(R.id.guardar);
-        nombre = (EditText) findViewById(R.id.nombre);
-        edad = (EditText) findViewById(R.id.edad);
-        ciclo = (EditText) findViewById(R.id.ciclo);
-        curso = (EditText) findViewById(R.id.curso);
-        nota = (EditText) findViewById(R.id.nota);
+        a = (Button) findViewById(R.id.atrasP);
+        g = (Button) findViewById(R.id.guardarP);
+        nombreP = (EditText) findViewById(R.id.nombreP);
+        edadP = (EditText) findViewById(R.id.edadP);
+        cicloP = (EditText) findViewById(R.id.cicloP);
+        cursoP = (EditText) findViewById(R.id.cursoP);
+        despachoP = (EditText) findViewById(R.id.despachoP);
 
         a.setOnClickListener(this);
         g.setOnClickListener(this);
@@ -37,17 +37,22 @@ public class Profesores extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.atras){
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
+        if(v.getId()==R.id.atrasP){
+            finish();
         }
 
-        if(v.getId()==R.id.guardar){
+        if(v.getId()==R.id.guardarP){
 
-            dbAdapter.insertarProfesor(nombre.getText().toString(),edad.getText().toString(),
-                    ciclo.getText().toString(),curso.getText().toString(),nota.getText().toString());
-
+            dbAdapter.insertarProfesor(nombreP.getText().toString(),edadP.getText().toString(),
+                    cicloP.getText().toString(),cursoP.getText().toString(),despachoP.getText().toString());
             Toast.makeText(this, "Profesor guardado", Toast.LENGTH_SHORT).show();
+
+            nombreP.setText("");
+            edadP.setText("");
+            cicloP.setText("");
+            cursoP.setText("");
+            despachoP.setText("");
+
 
         }
     }

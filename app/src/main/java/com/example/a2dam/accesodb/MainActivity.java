@@ -9,7 +9,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button p,e;
-
+    int Request_Value=0, Request_ValueProf=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         if(v.getId()==R.id.profesores){
-            Intent i = new Intent(this, Profesores.class);
-            startActivity(i);
+            Intent i2 = new Intent(this, Profesores.class);
+            startActivityForResult(i2, Request_ValueProf);
         }
+
         if (v.getId()==R.id.estudiantes){
             Intent i = new Intent(this, Estudiantes.class);
-            startActivity(i);
+            startActivityForResult(i,Request_Value);
 
         }
     }

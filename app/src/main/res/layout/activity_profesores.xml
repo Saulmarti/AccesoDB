@@ -81,28 +81,28 @@
             android:orientation="vertical">
 
             <EditText
-                android:id="@+id/nombre"
+                android:id="@+id/nombreP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal" />
 
             <EditText
-                android:id="@+id/edad"
+                android:id="@+id/edadP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal" />
 
             <EditText
-                android:id="@+id/ciclo"
+                android:id="@+id/cicloP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical|center_horizontal" />
 
             <EditText
-                android:id="@+id/curso"
+                android:id="@+id/cursoP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -110,7 +110,7 @@
 
 
             <EditText
-                android:id="@+id/despacho"
+                android:id="@+id/despachoP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -127,13 +127,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/Atras"
+            android:id="@+id/atrasP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Atras" />
 
         <Button
-            android:id="@+id/guardar"
+            android:id="@+id/guardarP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Guardar" />

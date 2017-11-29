@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 public class Estudiantes extends AppCompatActivity implements View.OnClickListener{
 
-    Button a,g;
-    EditText nombre,edad,ciclo,curso,nota;
+    private Button a,g;
+    private EditText nombre,edad,ciclo,curso,nota;
     private MyDBAdapter dbAdapter;
 
     @Override
@@ -41,8 +41,7 @@ public class Estudiantes extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
 
         if(v.getId()==R.id.atras){
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
+            finish();
         }
 
         if(v.getId()==R.id.guardar){
@@ -50,6 +49,12 @@ public class Estudiantes extends AppCompatActivity implements View.OnClickListen
             dbAdapter.insertarEstudiante(nombre.getText().toString(),edad.getText().toString(),
                     ciclo.getText().toString(),curso.getText().toString(),nota.getText().toString());
             Toast.makeText(this, "Estudiante guardado", Toast.LENGTH_SHORT).show();
+            nombre.setText("");
+            edad.setText("");
+            ciclo.setText("");
+            curso.setText("");
+            nota.setText("");
+
 
         }
     }
