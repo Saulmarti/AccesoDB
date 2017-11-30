@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 public class Estudiantes extends AppCompatActivity implements View.OnClickListener{
 
-    private Button a,g;
-    private EditText nombre,edad,ciclo,curso,nota;
+    private Button a,g,b;
+    private EditText nombre,edad,ciclo,curso,nota,idE;
     private MyDBAdapter dbAdapter;
 
     @Override
@@ -22,16 +22,20 @@ public class Estudiantes extends AppCompatActivity implements View.OnClickListen
         dbAdapter = new MyDBAdapter(this);
         dbAdapter.open();
 
+        b = (Button) findViewById(R.id.borrar);
         a = (Button) findViewById(R.id.atras);
         g = (Button) findViewById(R.id.guardar);
+
         nombre = (EditText) findViewById(R.id.nombre);
         edad = (EditText) findViewById(R.id.edad);
         ciclo = (EditText) findViewById(R.id.ciclo);
         curso = (EditText) findViewById(R.id.curso);
         nota = (EditText) findViewById(R.id.nota);
+        idE = (EditText) findViewById(R.id.idE);
 
         a.setOnClickListener(this);
         g.setOnClickListener(this);
+        b.setOnClickListener(this);
 
 
 
@@ -55,6 +59,15 @@ public class Estudiantes extends AppCompatActivity implements View.OnClickListen
             curso.setText("");
             nota.setText("");
 
+
+        }
+
+
+        if (v.getId()==R.id.borrar){
+
+            dbAdapter.eliminarEstudiante(Integer.valueOf(String.valueOf(idE.getText())));
+            Toast.makeText(this, "Estudiante "+idE.getText()+" borrado", Toast.LENGTH_SHORT).show();
+            idE.setText("");
 
         }
     }

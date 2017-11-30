@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.Editable;
+import android.util.Log;
 
 /**
  * Created by 2dam on 27/11/2017.
@@ -83,6 +85,16 @@ public class MyDBAdapter {
         newValuesEst.put(nota,nt);
 
         db.insert(DATABASE_TABLE_Est,null,newValuesEst);
+    }
+
+    public int eliminarProfesor(int idP)
+    {
+        return db.delete(DATABASE_TABLE_Prof, "_id=" + idP, null);
+    }
+
+    public int eliminarEstudiante(int id)
+    {
+        return db.delete(DATABASE_TABLE_Est, "_id=" + id, null);
     }
 
 

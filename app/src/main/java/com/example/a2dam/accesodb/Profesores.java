@@ -10,8 +10,8 @@ import android.widget.Toast;
 
 public class Profesores extends AppCompatActivity implements View.OnClickListener{
 
-    private Button a,g;
-    private EditText nombreP,edadP,cicloP,cursoP,despachoP;
+    private Button a,g,b;
+    private EditText nombreP,edadP,cicloP,cursoP,despachoP,idP;
     private MyDBAdapter dbAdapter;
 
     @Override
@@ -22,21 +22,26 @@ public class Profesores extends AppCompatActivity implements View.OnClickListene
         dbAdapter = new MyDBAdapter(this);
         dbAdapter.open();
 
+        b = (Button) findViewById(R.id.borrarP);
         a = (Button) findViewById(R.id.atrasP);
         g = (Button) findViewById(R.id.guardarP);
+
         nombreP = (EditText) findViewById(R.id.nombreP);
         edadP = (EditText) findViewById(R.id.edadP);
         cicloP = (EditText) findViewById(R.id.cicloP);
         cursoP = (EditText) findViewById(R.id.cursoP);
         despachoP = (EditText) findViewById(R.id.despachoP);
+        idP = (EditText) findViewById(R.id.idP);
 
         a.setOnClickListener(this);
         g.setOnClickListener(this);
+        b.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
+
         if(v.getId()==R.id.atrasP){
             finish();
         }
@@ -53,7 +58,14 @@ public class Profesores extends AppCompatActivity implements View.OnClickListene
             cursoP.setText("");
             despachoP.setText("");
 
-
         }
+
+        if (v.getId()==R.id.borrarP){
+
+            dbAdapter.eliminarProfesor(Integer.valueOf(String.valueOf(idP.getText())));
+            Toast.makeText(this, "Profesor "+idP.getText()+" borrado", Toast.LENGTH_SHORT).show();
+            idP.setText("");
+        }
+
     }
 }
