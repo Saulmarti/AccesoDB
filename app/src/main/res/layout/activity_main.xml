@@ -10,30 +10,49 @@
         android:id="@+id/profesores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
         android:text="Profesores"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_toStartOf="@+id/buscar"
+        android:layout_marginEnd="17dp" />
 
     <Button
         android:id="@+id/estudiantes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="39dp"
         android:text="Estudiantes"
-        android:layout_alignBaseline="@+id/profesores"
-        android:layout_alignBottom="@+id/profesores"
-        android:layout_toEndOf="@+id/profesores" />
+        android:layout_alignBaseline="@+id/buscar"
+        android:layout_alignBottom="@+id/buscar"
+        android:layout_toEndOf="@+id/buscar"
+        android:layout_marginStart="15dp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="83dp"
         android:text="Selecciona una opción"
-        android:textSize="18sp"
-        android:layout_marginStart="31dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/profesores" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp" />
+
+    <Button
+        android:id="@+id/buscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="buscar"
+        android:layout_alignBaseline="@+id/profesores"
+        android:layout_alignBottom="@+id/profesores"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/borrarDB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/estudiantes"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:text="Borrar Base de Datos"
+        android:textColor="@android:color/holo_red_dark" />
 
 </RelativeLayout>

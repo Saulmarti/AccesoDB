@@ -127,17 +127,19 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/atrasP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Atras" />
-
-        <Button
             android:id="@+id/guardarP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Guardar" />
 
+        <Button
+            android:id="@+id/borrarTablaP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Borrar Tabla"
+            android:textColor="@android:color/holo_red_dark" />
 
 
     </LinearLayout>

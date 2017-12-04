@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class Profesores extends AppCompatActivity implements View.OnClickListener{
 
-    private Button a,g,b;
+    private Button bt,g,b;
     private EditText nombreP,edadP,cicloP,cursoP,despachoP,idP;
     private MyDBAdapter dbAdapter;
 
@@ -23,7 +23,7 @@ public class Profesores extends AppCompatActivity implements View.OnClickListene
         dbAdapter.open();
 
         b = (Button) findViewById(R.id.borrarP);
-        a = (Button) findViewById(R.id.atrasP);
+        bt = (Button) findViewById(R.id.borrarTablaP);
         g = (Button) findViewById(R.id.guardarP);
 
         nombreP = (EditText) findViewById(R.id.nombreP);
@@ -33,7 +33,7 @@ public class Profesores extends AppCompatActivity implements View.OnClickListene
         despachoP = (EditText) findViewById(R.id.despachoP);
         idP = (EditText) findViewById(R.id.idP);
 
-        a.setOnClickListener(this);
+        bt.setOnClickListener(this);
         g.setOnClickListener(this);
         b.setOnClickListener(this);
 
@@ -42,22 +42,28 @@ public class Profesores extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
 
-        if(v.getId()==R.id.atrasP){
-            finish();
+        if(v.getId()==R.id.borrarTablaP){
+            dbAdapter.eliminarTabla("profesores");
+            Toast.makeText(this, "Tabla de profesores borrada", Toast.LENGTH_SHORT).show();
         }
 
         if(v.getId()==R.id.guardarP){
 
-            dbAdapter.insertarProfesor(nombreP.getText().toString(),edadP.getText().toString(),
-                    cicloP.getText().toString(),cursoP.getText().toString(),despachoP.getText().toString());
-            Toast.makeText(this, "Profesor guardado", Toast.LENGTH_SHORT).show();
+            if(nombreP.getText().toString().isEmpty() || edadP.getText().toString().isEmpty() || cicloP.getText().toString().isEmpty() || cursoP.getText().toString().isEmpty() || despachoP.getText().toString().isEmpty()) {
 
-            nombreP.setText("");
-            edadP.setText("");
-            cicloP.setText("");
-            cursoP.setText("");
-            despachoP.setText("");
+                Toast.makeText(this, "Rellena todos los datos correctamente", Toast.LENGTH_SHORT).show();
 
+            }else {
+                dbAdapter.insertarProfesor(nombreP.getText().toString(), Integer.valueOf(edadP.getText().toString()),
+                        cicloP.getText().toString(), Integer.valueOf(cursoP.getText().toString()), despachoP.getText().toString());
+                Toast.makeText(this, "Profesor guardado", Toast.LENGTH_SHORT).show();
+
+                nombreP.setText("");
+                edadP.setText("");
+                cicloP.setText("");
+                cursoP.setText("");
+                despachoP.setText("");
+            }
         }
 
         if (v.getId()==R.id.borrarP){

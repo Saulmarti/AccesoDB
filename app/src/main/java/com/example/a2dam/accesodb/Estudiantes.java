@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 public class Estudiantes extends AppCompatActivity implements View.OnClickListener{
 
-    private Button a,g,b;
+    private Button bt,g,b;
     private EditText nombre,edad,ciclo,curso,nota,idE;
     private MyDBAdapter dbAdapter;
 
@@ -23,7 +23,7 @@ public class Estudiantes extends AppCompatActivity implements View.OnClickListen
         dbAdapter.open();
 
         b = (Button) findViewById(R.id.borrar);
-        a = (Button) findViewById(R.id.atras);
+        bt = (Button) findViewById(R.id.borrarTabla);
         g = (Button) findViewById(R.id.guardar);
 
         nombre = (EditText) findViewById(R.id.nombre);
@@ -33,7 +33,7 @@ public class Estudiantes extends AppCompatActivity implements View.OnClickListen
         nota = (EditText) findViewById(R.id.nota);
         idE = (EditText) findViewById(R.id.idE);
 
-        a.setOnClickListener(this);
+        bt.setOnClickListener(this);
         g.setOnClickListener(this);
         b.setOnClickListener(this);
 
@@ -44,20 +44,30 @@ public class Estudiantes extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
 
-        if(v.getId()==R.id.atras){
-            finish();
+        if(v.getId()==R.id.borrarTabla){
+            dbAdapter.eliminarTabla("estudiantes");
+            Toast.makeText(this, "Tabla de estudiantes borrada", Toast.LENGTH_SHORT).show();
         }
 
         if(v.getId()==R.id.guardar){
 
-            dbAdapter.insertarEstudiante(nombre.getText().toString(),edad.getText().toString(),
-                    ciclo.getText().toString(),curso.getText().toString(),nota.getText().toString());
-            Toast.makeText(this, "Estudiante guardado", Toast.LENGTH_SHORT).show();
-            nombre.setText("");
-            edad.setText("");
-            ciclo.setText("");
-            curso.setText("");
-            nota.setText("");
+            if(nombre.getText().toString().isEmpty() || edad.getText().toString().isEmpty() || ciclo.getText().toString().isEmpty() || curso.getText().toString().isEmpty() || nota.getText().toString().isEmpty()){
+                Toast.makeText(this, "Rellena todos los datos correctamente", Toast.LENGTH_SHORT).show();
+
+            }else {
+
+
+                dbAdapter.insertarEstudiante(nombre.getText().toString(), Integer.valueOf(edad.getText().toString()),
+                        ciclo.getText().toString(), Integer.valueOf(curso.getText().toString()), Integer.valueOf(nota.getText().toString()));
+                Toast.makeText(this, "Estudiante guardado", Toast.LENGTH_SHORT).show();
+
+
+                nombre.setText("");
+                edad.setText("");
+                ciclo.setText("");
+                curso.setText("");
+                nota.setText("");
+            }
 
 
         }

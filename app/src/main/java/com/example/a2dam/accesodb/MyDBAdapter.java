@@ -2,11 +2,14 @@ package com.example.a2dam.accesodb;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.text.Editable;
 import android.util.Log;
+
+import java.util.ArrayList;
 
 /**
  * Created by 2dam on 27/11/2017.
@@ -39,8 +42,8 @@ public class MyDBAdapter {
     // Instancia de la base de datos
     private SQLiteDatabase db;
 
-    private static final String DATABASE_CREATE_Est = "CREATE TABLE "+DATABASE_TABLE_Est+" (_id integer primary key autoincrement, nombre text, edad text, ciclo text, curso text, nota text );";
-    private static final String DATABASE_CREATE_Prof = "CREATE TABLE "+DATABASE_TABLE_Prof+" (_id integer primary key autoincrement, nombreP text, edadP text, cicloP text, cursoP text, despachoP text );";
+    private static final String DATABASE_CREATE_Est = "CREATE TABLE "+DATABASE_TABLE_Est+" (_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso integer, nota integer );";
+    private static final String DATABASE_CREATE_Prof = "CREATE TABLE "+DATABASE_TABLE_Prof+" (_id integer primary key autoincrement, nombreP text, edadP integer, cicloP text, cursoP integer, despachoP text );";
     private static final String DATABASE_DROP_Est = "DROP TABLE IF EXISTS "+DATABASE_TABLE_Est+";";
     private static final String DATABASE_DROP_Prof = "DROP TABLE IF EXISTS "+DATABASE_TABLE_Prof+";";
 
@@ -61,7 +64,7 @@ public class MyDBAdapter {
 
     }
 
-    public void insertarProfesor(String n2,String e2,String c2,String cu2,String nt2){
+    public void insertarProfesor(String n2,int e2,String c2,int cu2,String nt2){
         //Creamos un nuevo registro de valores a insertar
         ContentValues newValuesProf = new ContentValues();
         //Asignamos los valores de cada campo
@@ -74,7 +77,7 @@ public class MyDBAdapter {
         db.insert(DATABASE_TABLE_Prof,null,newValuesProf);
     }
 
-    public void insertarEstudiante(String n,String e,String c,String cu,String nt){
+    public void insertarEstudiante(String n,int e,String c,int cu,int nt){
         //Creamos un nuevo registro de valores a insertar
         ContentValues newValuesEst = new ContentValues();
         //Asignamos los valores de cada campo
@@ -97,6 +100,61 @@ public class MyDBAdapter {
         return db.delete(DATABASE_TABLE_Est, "_id=" + id, null);
     }
 
+    public void eliminarTabla(String tabla){
+        db.delete(tabla,null,null);
+    }
+
+    public void eliminarBaseDeDAtos(){
+        context.deleteDatabase(DATABASE_NAME);
+    }
+
+    public ArrayList<String> recuperarCurso(String tabla){
+        ArrayList<String> curso = new ArrayList<String>();
+
+        Cursor micursor = db.query(tabla,null,null,null,null,null,null);
+        if(micursor.moveToFirst()){
+            do{
+                curso.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(4));
+            }while (micursor.moveToNext());
+        }
+        return  curso;
+    }
+
+    public ArrayList<String> recuperarCiclo(String tabla){
+        ArrayList<String> ciclo = new ArrayList<String>();
+
+        Cursor micursor = db.query(tabla,null,null,null,null,null,null);
+        if(micursor.moveToFirst()){
+            do{
+                ciclo.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(3));
+            }while (micursor.moveToNext());
+        }
+        return  ciclo;
+    }
+
+    public ArrayList<String> recuperarCicloycurso(String tabla){
+        ArrayList<String> cicloycurso = new ArrayList<String>();
+
+        Cursor micursor = db.query(tabla,null,null,null,null,null,null);
+        if(micursor.moveToFirst()){
+            do{
+                cicloycurso.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(3)+" "+micursor.getString(4));
+            }while (micursor.moveToNext());
+        }
+        return  cicloycurso;
+    }
+
+    public ArrayList<String> recuperarTodo(String tabla){
+        ArrayList<String> todo = new ArrayList<String>();
+
+        Cursor micursor = db.query(tabla,null,null,null,null,null,null);
+        if(micursor.moveToFirst()){
+            do{
+                todo.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(2)+" "+micursor.getString(3)+" "+micursor.getString(4)+" "+micursor.getString(5));
+            }while (micursor.moveToNext());
+        }
+        return  todo;
+    }
 
 
     private static class MyDbHelper extends SQLiteOpenHelper {
