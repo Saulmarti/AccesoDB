@@ -17,7 +17,7 @@ import static android.R.attr.value;
 
 public class Buscar extends AppCompatActivity implements View.OnClickListener {
 
-    Button prof, est, ciclo,curso,cicloycurso,todos;
+    Button prof, est, ciclo,curso,cicloycurso,todos,pya;
     MyDBAdapter dbAdapter;
     TextView cont;
     ListView listview;
@@ -41,6 +41,7 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
         cicloycurso = (Button) findViewById(R.id.cicloycurso);
         todos = (Button) findViewById(R.id.todos);
         cont = (TextView) findViewById(R.id.contenedor);
+        pya = (Button) findViewById(R.id.profalum);
 
         curso.setOnClickListener(this);
         ciclo.setOnClickListener(this);
@@ -48,6 +49,7 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
         todos.setOnClickListener(this);
         prof.setOnClickListener(this);
         est.setOnClickListener(this);
+        pya.setOnClickListener(this);
 
 
         curso.setOnClickListener(new View.OnClickListener() {
@@ -180,30 +182,29 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-
-
         if(v.getId()==R.id.profesor) {
             opcion=1;
             pulsado(prof);
             dejarDePulsar(est);
 
-
         }
-
-
-
-
 
         if(v.getId()==R.id.estudiante) {
             opcion=2;
             pulsado(est);
             dejarDePulsar(prof);
 
-
         }
 
+        if(v.getId()==R.id.profalum){
 
 
+            ArrayList<String> todos = dbAdapter.recuperarAlyProf();
+            ArrayAdapter adapter = new ArrayAdapter<String>(Buscar.this,
+                    R.layout.listview, todos);
+            listview.setAdapter(adapter);
+
+        }
 
     }
 

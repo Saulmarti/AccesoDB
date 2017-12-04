@@ -156,6 +156,23 @@ public class MyDBAdapter {
         return  todo;
     }
 
+    public ArrayList<String> recuperarAlyProf(){
+        ArrayList<String> todos = new ArrayList<String>();
+
+        Cursor micursor = db.query(DATABASE_TABLE_Est,null,null,null,null,null,null);
+        micursor = db.query("*",null,null,null,null,null,null);
+
+        if(micursor.moveToFirst()){
+            do{
+                todos.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(2)+" "+micursor.getString(3)+" "
+                        +micursor.getString(4)+" "+micursor.getString(5));
+            }while (micursor.moveToNext());
+        }
+
+
+        return todos;
+    }
+
 
     private static class MyDbHelper extends SQLiteOpenHelper {
 
