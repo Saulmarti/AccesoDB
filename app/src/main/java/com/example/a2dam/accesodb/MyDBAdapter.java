@@ -159,14 +159,21 @@ public class MyDBAdapter {
     public ArrayList<String> recuperarAlyProf(){
         ArrayList<String> todos = new ArrayList<String>();
 
-        Cursor micursor = db.query(DATABASE_TABLE_Est,null,null,null,null,null,null);
-        micursor = db.query("*",null,null,null,null,null,null);
+        Cursor micursor = db.query(DATABASE_TABLE_Prof,null,null,null,null,null,null);
+        Cursor micursor2 = db.query(DATABASE_TABLE_Est,null,null,null,null,null,null);
 
         if(micursor.moveToFirst()){
             do{
                 todos.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(2)+" "+micursor.getString(3)+" "
                         +micursor.getString(4)+" "+micursor.getString(5));
             }while (micursor.moveToNext());
+        }
+
+        if(micursor2.moveToFirst()){
+            do{
+                todos.add(micursor2.getString(0)+" "+micursor2.getString(1)+" "+micursor2.getString(2)+" "+micursor2.getString(3)+" "
+                        +micursor2.getString(4)+" "+micursor2.getString(5));
+            }while (micursor2.moveToNext());
         }
 
 

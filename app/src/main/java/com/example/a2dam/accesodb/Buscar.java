@@ -186,6 +186,7 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
             opcion=1;
             pulsado(prof);
             dejarDePulsar(est);
+            dejarDePulsar(pya);
 
         }
 
@@ -193,11 +194,19 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
             opcion=2;
             pulsado(est);
             dejarDePulsar(prof);
+            dejarDePulsar(pya);
 
         }
 
         if(v.getId()==R.id.profalum){
 
+            pulsado(pya);
+            dejarDePulsar(est);
+            dejarDePulsar(prof);
+            dejarDePulsar(ciclo);
+            dejarDePulsar(curso);
+            dejarDePulsar(cicloycurso);
+            dejarDePulsar(todos);
 
             ArrayList<String> todos = dbAdapter.recuperarAlyProf();
             ArrayAdapter adapter = new ArrayAdapter<String>(Buscar.this,
