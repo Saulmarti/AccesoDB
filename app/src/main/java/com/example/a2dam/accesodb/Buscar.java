@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import static android.R.attr.text;
 import static android.R.attr.value;
 
 public class Buscar extends AppCompatActivity implements View.OnClickListener {
@@ -20,6 +24,7 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
     Button prof, est, ciclo,curso,cicloycurso,todos,pya;
     MyDBAdapter dbAdapter;
     TextView cont;
+    EditText txtCiclo,txtCurso;
     ListView listview;
     int opcion=0;
 
@@ -42,6 +47,8 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
         todos = (Button) findViewById(R.id.todos);
         cont = (TextView) findViewById(R.id.contenedor);
         pya = (Button) findViewById(R.id.profalum);
+        txtCiclo = (EditText) findViewById(R.id.textCiclo);
+        txtCurso = (EditText) findViewById(R.id.textCurso);
 
         curso.setOnClickListener(this);
         ciclo.setOnClickListener(this);
@@ -60,27 +67,31 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
                 dejarDePulsar(ciclo);
                 dejarDePulsar(cicloycurso);
                 dejarDePulsar(todos);
+                String textCurso = txtCurso.getText().toString();
 
+                if(textCurso!=null) {
                 switch (opcion) {
 
                     case 1:
 
 
-                    ArrayList<String> cursos = dbAdapter.recuperarCurso("profesores");
+                    ArrayList<String> cursos = dbAdapter.recuperarCurso("profesores",textCurso);
                     ArrayAdapter adapter = new ArrayAdapter<String>(Buscar.this,
-                            R.layout.listview, cursos);
+                            R.layout.support_simple_spinner_dropdown_item , cursos);
                     listview.setAdapter(adapter);
                         break;
 
                     case 2:
-                        ArrayList<String> cursos2 = dbAdapter.recuperarCurso("estudiantes");
+                        ArrayList<String> cursos2 = dbAdapter.recuperarCurso("estudiantes",textCurso);
                         ArrayAdapter adapter2 = new ArrayAdapter<String>(Buscar.this,
-                                R.layout.listview, cursos2);
+                                R.layout.support_simple_spinner_dropdown_item, cursos2);
                         listview.setAdapter(adapter2);
 
                 }
 
-            }
+            }else{
+                    Toast.makeText(Buscar.this, "Error", Toast.LENGTH_SHORT).show();
+                }}
         });
 
 
@@ -91,28 +102,31 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
                 dejarDePulsar(curso);
                 dejarDePulsar(cicloycurso);
                 dejarDePulsar(todos);
+                String textCiclo = txtCiclo.getText().toString();
+                if(textCiclo!=null) {
+                    switch (opcion) {
 
-                switch (opcion) {
+                        case 1:
+                            ArrayList<String> ciclos = dbAdapter.recuperarCiclo("profesores",textCiclo);
+                            ArrayAdapter adapter = new ArrayAdapter<String>(Buscar.this,
+                                    android.R.layout.simple_list_item_1, ciclos);
+                            listview.setAdapter(adapter);
 
-                    case 1:
+                            break;
 
-                    ArrayList<String> ciclos = dbAdapter.recuperarCiclo("profesores");
-                    ArrayAdapter adapter = new ArrayAdapter<String>(Buscar.this,
-                            R.layout.listview, ciclos);
-                    listview.setAdapter(adapter);
+                        case 2:
 
-                        break;
+                            ArrayList<String> ciclos2 = dbAdapter.recuperarCiclo("estudiantes",textCiclo);
+                            ArrayAdapter adapter2 = new ArrayAdapter<String>(Buscar.this,
+                                    android.R.layout.simple_list_item_1, ciclos2);
+                            listview.setAdapter(adapter2);
 
-                    case 2:
+                            break;
+                    }
 
-                        ArrayList<String> ciclos2 = dbAdapter.recuperarCiclo("estudiantes");
-                        ArrayAdapter adapter2 = new ArrayAdapter<String>(Buscar.this,
-                                R.layout.listview, ciclos2);
-                        listview.setAdapter(adapter2);
-
-                        break;
-                }
-            }
+                }else {
+                    Toast.makeText(Buscar.this, "Error", Toast.LENGTH_SHORT).show();
+                }}
         });
 
 
@@ -123,25 +137,32 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
                 dejarDePulsar(ciclo);
                 dejarDePulsar(curso);
                 dejarDePulsar(todos);
+                String textCiclo = txtCiclo.getText().toString();
+                String textCurso = txtCurso.getText().toString();
+
+                if(textCiclo!=null && textCurso!=null){
 
 
-                switch (opcion) {
+                    switch (opcion) {
 
-                    case 1:
+                        case 1:
 
-                    ArrayList<String> cicloycursos = dbAdapter.recuperarCicloycurso("profesores");
-                    ArrayAdapter adapter = new ArrayAdapter<String>(Buscar.this,
-                            R.layout.listview, cicloycursos);
-                    listview.setAdapter(adapter);
-                        break;
+                            ArrayList<String> cicloycursos = dbAdapter.recuperarCicloycurso("profesores", textCiclo, textCurso);
+                            ArrayAdapter adapter = new ArrayAdapter<String>(Buscar.this,
+                                    android.R.layout.simple_list_item_1, cicloycursos);
+                            listview.setAdapter(adapter);
+                            break;
 
-                    case 2:
-                        ArrayList<String> cicloycursos2 = dbAdapter.recuperarCicloycurso("estudiantes");
-                        ArrayAdapter adapter2 = new ArrayAdapter<String>(Buscar.this,
-                                R.layout.listview, cicloycursos2);
-                        listview.setAdapter(adapter2);
+                        case 2:
+                            ArrayList<String> cicloycursos2 = dbAdapter.recuperarCicloycurso("estudiantes", textCiclo, textCurso);
+                            ArrayAdapter adapter2 = new ArrayAdapter<String>(Buscar.this,
+                                    android.R.layout.simple_list_item_1, cicloycursos2);
+                            listview.setAdapter(adapter2);
 
-                        break;
+                            break;
+                    }
+                }else{
+                    Toast.makeText(Buscar.this, "Error", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -161,14 +182,14 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
 
                     ArrayList<String> todos = dbAdapter.recuperarTodo("profesores");
                     ArrayAdapter adapter = new ArrayAdapter<String>(Buscar.this,
-                            R.layout.listview, todos);
+                            android.R.layout.simple_list_item_1, todos);
                     listview.setAdapter(adapter);
                         break;
 
                     case 2:
                         ArrayList<String> todos2 = dbAdapter.recuperarTodo("estudiantes");
                         ArrayAdapter adapter2 = new ArrayAdapter<String>(Buscar.this,
-                                R.layout.listview, todos2);
+                                android.R.layout.simple_list_item_1, todos2);
                         listview.setAdapter(adapter2);
 
                         break;
@@ -210,7 +231,7 @@ public class Buscar extends AppCompatActivity implements View.OnClickListener {
 
             ArrayList<String> todos = dbAdapter.recuperarAlyProf();
             ArrayAdapter adapter = new ArrayAdapter<String>(Buscar.this,
-                    R.layout.listview, todos);
+                    R.layout.support_simple_spinner_dropdown_item, todos);
             listview.setAdapter(adapter);
 
         }

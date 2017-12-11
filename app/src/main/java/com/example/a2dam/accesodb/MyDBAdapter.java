@@ -29,11 +29,11 @@ public class MyDBAdapter {
     private static final String curso = "curso";
     private static final String nota = "nota";
 
-    private static final String nombreP = "nombreP";
-    private static final String edadP = "edadP";
-    private static final String cicloP = "cicloP";
-    private static final String cursoP = "cursoP";
-    private static final String despachoP = "despachoP";
+    private static final String nombreP = "nombre";
+    private static final String edadP = "edad";
+    private static final String cicloP = "ciclo";
+    private static final String cursoP = "curso";
+    private static final String despachoP = "despacho";
 
     // Contexto de la aplicación que usa la base de datos
     private final Context context;
@@ -43,7 +43,7 @@ public class MyDBAdapter {
     private SQLiteDatabase db;
 
     private static final String DATABASE_CREATE_Est = "CREATE TABLE "+DATABASE_TABLE_Est+" (_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso integer, nota integer );";
-    private static final String DATABASE_CREATE_Prof = "CREATE TABLE "+DATABASE_TABLE_Prof+" (_id integer primary key autoincrement, nombreP text, edadP integer, cicloP text, cursoP integer, despachoP text );";
+    private static final String DATABASE_CREATE_Prof = "CREATE TABLE "+DATABASE_TABLE_Prof+" (_id integer primary key autoincrement, nombre text, edad integer, ciclo text, curso integer, despacho text );";
     private static final String DATABASE_DROP_Est = "DROP TABLE IF EXISTS "+DATABASE_TABLE_Est+";";
     private static final String DATABASE_DROP_Prof = "DROP TABLE IF EXISTS "+DATABASE_TABLE_Prof+";";
 
@@ -108,10 +108,10 @@ public class MyDBAdapter {
         context.deleteDatabase(DATABASE_NAME);
     }
 
-    public ArrayList<String> recuperarCurso(String tabla){
+    public ArrayList<String> recuperarCurso(String tabla, String text){
         ArrayList<String> curso = new ArrayList<String>();
 
-        Cursor micursor = db.query(tabla,null,null,null,null,null,null);
+        Cursor micursor = db.rawQuery("SELECT * FROM "+tabla+" WHERE curso='"+text+"'",null);
         if(micursor.moveToFirst()){
             do{
                 curso.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(4));
@@ -120,10 +120,10 @@ public class MyDBAdapter {
         return  curso;
     }
 
-    public ArrayList<String> recuperarCiclo(String tabla,String Pciclo){
+    public ArrayList<String> recuperarCiclo(String tabla, String text){
         ArrayList<String> ciclo = new ArrayList<String>();
 
-        Cursor micursor = db.rawQuery("Select id,nombre,ciclo="+Pciclo+" FROM "+tabla+" ",null);
+        Cursor micursor = db.rawQuery("SELECT * FROM "+tabla+" WHERE ciclo='"+text+"'",null);
         if(micursor.moveToFirst()){
             do{
                 ciclo.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(3));
@@ -133,10 +133,10 @@ public class MyDBAdapter {
     }
 
 
-    public ArrayList<String> recuperarCicloycurso(String tabla){
+    public ArrayList<String> recuperarCicloycurso(String tabla,String text, String text2){
         ArrayList<String> cicloycurso = new ArrayList<String>();
 
-        Cursor micursor = db.query(tabla,null,null,null,null,null,null);
+        Cursor micursor = db.rawQuery("SELECT * FROM "+tabla+" WHERE ciclo='"+text+"' AND curso='"+text2+"'",null);
         if(micursor.moveToFirst()){
             do{
                 cicloycurso.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(3)+" "+micursor.getString(4));
