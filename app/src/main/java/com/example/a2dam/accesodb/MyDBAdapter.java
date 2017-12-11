@@ -120,10 +120,10 @@ public class MyDBAdapter {
         return  curso;
     }
 
-    public ArrayList<String> recuperarCiclo(String tabla){
+    public ArrayList<String> recuperarCiclo(String tabla,String Pciclo){
         ArrayList<String> ciclo = new ArrayList<String>();
 
-        Cursor micursor = db.query(tabla,null,null,null,null,null,null);
+        Cursor micursor = db.rawQuery("Select id,nombre,ciclo="+Pciclo+" FROM "+tabla+" ",null);
         if(micursor.moveToFirst()){
             do{
                 ciclo.add(micursor.getString(0)+" "+micursor.getString(1)+" "+micursor.getString(3));
@@ -131,6 +131,7 @@ public class MyDBAdapter {
         }
         return  ciclo;
     }
+
 
     public ArrayList<String> recuperarCicloycurso(String tabla){
         ArrayList<String> cicloycurso = new ArrayList<String>();
